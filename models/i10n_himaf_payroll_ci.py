@@ -1,6 +1,7 @@
 from odoo import fields, models, api, _
 from dateutil.relativedelta import relativedelta
 from datetime import date
+from werkzeug.urls import url_encode
 		
 class res_company(models.Model):
     _inherit = 'res.company'
