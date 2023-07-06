@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+
+        <!-- <record id="hr_contract_view_form_l10n_ci_payroll_2day" model="ir.ui.view">
+            <field name="name">hr.contract.view.form.l10n.ci_payroll_2day</field>
+            <field name="model">hr.contract</field>
+            <field name="priority">20</field>
+            <field name="inherit_id" ref="om_hr_payroll.hr_contract_form_inherit"/>
+    		<field name="arch" type="xml">
+        		<data>
+                    <div class="o_row" name="wage" position="after">
+                        <label for="up_wage" attrs="{'invisible': [('type', '=', 'work')]}"/>
+                        <label for="up_wage" string ="Prime" attrs="{'invisible': [('type', '!=', 'work')]}"/>
+                        <div class="o_row" name="up_wage">
+                            <field name="up_wage" nolabel="1"/>
+                            <span>/ month</span>
+                        </div>
+                    </div>
+                    <field name="wage" nolabel="1" position="replace">
+                        <field name="wage" nolabel="1" attrs="{'required': [('type', '=', 'work')], 'invisible': [('type', '!=', 'work')]}"/>
+                    </field>
+
+                    <field name="date_start" position="before">
+                        <field name="type" />
+                    </field>
+
+                    <field name="trial_date_end" position="replace">
+                        <field name="trial_date_end" attrs="{'invisible': ['|', ('type', '=', 'stage'), ('type', '=', 'intern')]}" />
+                    </field>
+
+                    <field name="date_end" nolabel="1" position="replace">
+                        <field name="date_end" nolabel="1" attrs="{'required': ['|', ('type', '=', 'stage'), ('type', '=', 'intern')]}"/>
+                    </field>
+
+                    <field name="struct_id" required="1" position="replace">
+                        <field name="struct_id" attrs="{'required': [('type', '=', 'work')], 'invisible': [('type', '!=', 'work')]}" />
+                    </field>
+                                    
+                </data>
+            </field>
+        </record> -->
+    	<!--	
+    	<record id="hr_payslip_form_l10n_ci_payroll" model="ir.ui.view">
+            <field name="name">hr.payslip.form.l10n.ma_payroll</field>
+            <field name="model">hr.payslip</field>
+            <field name="priority">20</field>
+            <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+            <field name="arch" type="xml">
+                <data>
+                     <xpath expr="//field[@name='paid']" position="after">
+                         <field name="payment_mode"/>
+                     </xpath>
+                </data>
+            </field>
+        </record> -->
+    		
+    	<record id="res_company_form_l10n_himaf_payroll_ci" model="ir.ui.view">
+            <field name="name">res.company.form.l10n.himaf_payroll_ci</field>
+            <field name="model">res.company</field>
+            <field name="priority">20</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+            <data>
+                <xpath expr="//notebook" position="inside">
+    				<page name="cnps_payroll" string="Paramètres CNPS">
+                        <group>
+                            <group colspan="2">
+                                <field name="n_cnps"/>
+                            </group>
+                            
+                            <group string="Cotisation Salariale">
+                                <field name="cnps_ret_sal"/>
+                            </group>
+                            <group string="Cotisation Patronale">
+                                <field name="cnps_ret_pat"/>
+                                <field name="cnps_at"/>
+                                <field name="cnps_pf"/>
+                            </group>      
+                            
+                           <!-- <newline/>
+    						<field name="conv_coll"/>
+    						<newline/>-->
+                              	
+                        </group>
+                    </page>
+                    <page name="salary_grid" string="Grille Salariale">
+                        <field name="salary_grid_ids" widget="section_and_note_one2many" mode="tree" context="{'company_id': id}">
+                            <tree editable="bottom" string="Grille de salaire" default_order="name">
+                                <control>
+                                    <create name="add_line_control" string="Add a line"/>
+                                </control>
+
+                                
+                                <field name="name" required="1" />
+
+                                <field name="salary" required="1" />
+                                
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </data>
+            </field>
+        </record>
+		
+		<record id="hr_employee_form_l10n_himaf_payroll_ci" model="ir.ui.view">
+            <field name="name">hr.employee.form.l10n.himaf_payroll_ci</field>
+            <field name="model">hr.employee</field>
+            <field name="priority">30</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+    			<data>
+    	            <xpath expr="//div[hasclass('oe_title')]/h1" position="before">
+						<h2>
+                            <field name="code" placeholder="Matricule" required="1" readonly="1"/>
+                        </h2>
+    		        </xpath>
+    			</data>
+			</field>
+		</record>
+
+    </data>
+
+</odoo>

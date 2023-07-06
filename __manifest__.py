@@ -11,7 +11,9 @@
     "category": "Human Resources",
     "summary": "Paie pour la Cote d'Ivoire",
     "depends": ["hr", "hr_payroll"],
-    "data": ["views/hr_view.xml", "views/base_config_view.xml"],
+    "data": [
+        "data/ir_sequence_data.xml",
+        "views/hr_view.xml", "views/base_config_view.xml", "views/i10n_himaf_payroll_view.xml"],
     "post_init_hook": "post_init_hook",
     "installable": True,
 }
