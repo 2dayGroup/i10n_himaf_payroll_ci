@@ -13,7 +13,9 @@
     "depends": ["hr", "hr_payroll"],
     "data": [
         "data/ir_sequence_data.xml",
-        "views/hr_view.xml", "views/base_config_view.xml", "views/i10n_himaf_payroll_view.xml"],
+        "views/hr_view.xml", "views/base_config_view.xml", "views/i10n_himaf_payroll_view.xml",
+        'security/ir.model.access.csv',
+        ],
     "post_init_hook": "post_init_hook",
     "installable": True,
 }

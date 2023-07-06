@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_company_salary_grid,l10n_ci_hr_payroll_2day.salary.grid,l10n_ci_hr_payroll_2day.model_salary_grid,base.group_user,1,1,1,1
+access_hr_intern,l10n_ci_hr_payroll_2day.hr.intern,l10n_ci_hr_payroll_2day.model_hr_intern,base.group_user,1,1,1,1
