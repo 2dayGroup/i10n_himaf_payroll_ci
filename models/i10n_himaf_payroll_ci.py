@@ -42,8 +42,10 @@ class HrEmployeePrivate(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
-            if vals.get('code') == '/':
-                vals['code'] = self.env['ir.sequence'].next_by_code('hr.employee')
+            vals['code'] = self.env['ir.sequence'].next_by_code('hr.employee') or _("/")
+
+        # return super().create(vals_list)
+            
             if vals.get('user_id'):
                 user = self.env['res.users'].browse(vals['user_id'])
                 vals.update(self._sync_user(user, bool(vals.get('image_1920'))))
