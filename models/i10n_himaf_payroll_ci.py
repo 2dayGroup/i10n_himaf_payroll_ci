@@ -77,7 +77,7 @@ class HrEmployeePrivate(models.Model):
         return employees
 
     def write(self, vals):
-        if vals['code'] == '/':
+        if self.code == '/':
             vals['code'] = self.env['ir.sequence'].next_by_code('hr.employee')
         if 'address_home_id' in vals:
             account_id = vals.get('bank_account_id') or self.bank_account_id.id
