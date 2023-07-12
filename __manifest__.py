@@ -22,4 +22,8 @@
         ],
     "post_init_hook": "post_init_hook",
     "installable": True,
+    'css': [
+        'static/src/css/report.css'
+    ],
+    "images":['static/description/Banner.png'],
 }
