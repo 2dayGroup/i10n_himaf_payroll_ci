@@ -20,7 +20,7 @@
         </div>
 
         <div class="article o_report_layout_standard"  t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
-            <t t-raw="0"/>
+            <t t-out="0"/>
         </div>
 
         <div class="footer o_standard_footer">
@@ -48,12 +48,12 @@
             </t>
         </t>
 
-        <t t-esc="company.update_scss()"/>
+        <!-- <t t-esc="company.update_scss()"/> -->
 
-        <t t-call="i10n_himaf_payroll_ci.payslip_layout"><t t-raw="0"/></t>
+        <t t-call="i10n_himaf_payroll_ci.payslip_layout"><t t-out="0"/></t>
     </template>
 
-    <template id="contract_layout">
+    <!-- <template id="contract_layout">
         <div class="header mb-0 first-page" >
         	<link rel="stylesheet" href="/i10n_himaf_payroll_ci/static/src/css/report.css"/>
 	        <div class="row" >
@@ -75,7 +75,7 @@
 	    </div>
 
         <div class="article o_report_layout_standard"  t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
-            <t t-raw="0"/>
+            <t t-out="0"/>
         </div>
 
         <div class="footer o_standard_footer first-page">
@@ -92,7 +92,7 @@
         <t t-if="not o" t-set="o" t-value="doc"/>
 
         <t t-if="not company">
-            <!-- Multicompany -->
+            ### Multicompany ###
             <t t-if="company_id">
                 <t t-set="company" t-value="company_id"/>
             </t>
@@ -106,8 +106,8 @@
 
         <t t-esc="company.update_scss()"/>
 
-        <t t-call="i10n_himaf_payroll_ci.contract_layout"><t t-raw="0"/></t>
-    </template>
+        <t t-call="i10n_himaf_payroll_ci.contract_layout"><t t-out="0"/></t>
+    </template> -->
 
 
     
