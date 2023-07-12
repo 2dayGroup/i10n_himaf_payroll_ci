@@ -45,7 +45,11 @@
                                     <td class="py-0">Réference: <span t-field="o.number"/></td>
                                 </tr>
                                 <tr>
-                                    <td class="py-0">Catégorie: <span t-field="o.contract_id.wage.name"/></td>
+                                    <td class="py-0">
+                                    Catégorie: (a imp.)
+                                   <!-- <span t-field="o.contract_id.wage.name"/> 
+                                     TODO: categorie a mettre en oeuvrer -->
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="py-0">Parts IGR: </td>
@@ -78,7 +82,7 @@
                             </table>
                             <table class="table table-sm table-borderless" style="font-size: 13px;">
                                 <tr >
-                                    <td class="py-0">Matricule: <span t-field="o.employee_id.code"/></td>
+                                    <td class="py-0">Matricule: <span t-field="o.employee_id.registration_number"/></td>
                                 </tr>
                                 <tr>
                                     <td class="py-0">POSTE: <span t-field="o.employee_id.job_title"/></td>
