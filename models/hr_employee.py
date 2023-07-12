@@ -15,7 +15,7 @@ UPDATE_PARTNER_FIELDS = ["firstname", "lastname", "user_id", "address_home_id"]
 class HrEmployee(models.Model):
     _inherit = "hr.employee"
     
-    registration_number = fields.Char('Registration Number of the Employee', groups="hr.group_hr_user", copy=False, required=True, default="/")
+    # registration_number = fields.Char('Registration Number of the Employee', groups="hr.group_hr_user", copy=False, required=True, default="/")
 
     @api.model
     def _names_order_default(self):
