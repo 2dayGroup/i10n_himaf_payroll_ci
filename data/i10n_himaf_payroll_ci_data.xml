@@ -73,7 +73,7 @@
 
 
 
-
+<!-- 
 
     <record id="hr_payroll.hr_rule_basic" model="hr.salary.rule">
         <field name="name">Salaire de base</field>
@@ -147,8 +147,10 @@ result_rate = 75</field>
         <field name="sequence">20</field>
         <field name="account_debit" ref="l10n_syscohada.1_pcg_6613" />
         <field name="category_id" ref="hr_payroll.ALW"/>
-       <!-- <field name="condition_select">python</field>
-        <field name="condition_python">result = contract.up_wage &gt; 0</field>-->
+##zone commenté##
+        <field name="condition_select">python</field>
+        <field name="condition_python">result = contract.up_wage &gt; 0</field>
+##zone commenté##
         <field name="amount_select">code</field>
         <field name="amount_python_compute">result = contract.up_wage</field>
     </record>
@@ -170,7 +172,9 @@ result_rate = 75</field>
         <field name="code">IS</field>
         <field name="account_credit" ref="l10n_syscohada.1_pcg_4472" />
         <field name="category_id" ref="DEDFISCSAL"/>
-        <!-- <field name="register_id" ref="hr_DGI_register"/> -->
+##zone commenté##
+     <field name="register_id" ref="hr_DGI_register"/> 
+     ##zone commenté##
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">result_rate = 1.2
@@ -182,7 +186,9 @@ result = categories.GROSS</field>
         <field name="sequence" eval="111"/>
         <field name="code">IS_PAT</field>
         <field name="category_id" ref="DEDFISCPAT"/>
-        <!-- <field name="register_id" ref="hr_DGI_register"/> -->
+##zone commenté##
+      <field name="register_id" ref="hr_DGI_register"/> 
+##zone commenté##
         <field name="parent_rule_id" ref="hr_rule_is"/>
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
@@ -196,7 +202,9 @@ result = categories.GROSS</field>
         <field name="code">CN</field>
         <field name="account_credit" ref="l10n_syscohada.1_pcg_4473" />
         <field name="category_id" ref="DEDFISCSAL"/>
-        <!-- <field name="register_id" ref="hr_DGI_register"/> -->
+##zone commenté##
+    <field name="register_id" ref="hr_DGI_register"/> -
+##zone commenté##
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">base= categories.GROSS * 0.8
@@ -227,7 +235,9 @@ result = round(result)
         <field name="code">IGR</field>
         <field name="account_credit" ref="l10n_syscohada.1_pcg_4471" />
         <field name="category_id" ref="DEDFISCSAL"/>
-        <!-- <field name="register_id" ref="hr_DGI_register"/> -->
+    ##zone commenté##
+    <field name="register_id" ref="hr_DGI_register"/> 
+    ##zone commenté##
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">base= categories.GROSS * 0.8
@@ -270,7 +280,9 @@ result = round(result)
         <field name="code">CNPS_RET</field>
         <field name="account_credit" ref="l10n_syscohada.1_pcg_4313" />
         <field name="category_id" ref="DEDSOC"/>
-        <!-- <field name="register_id" ref="hr_CNPS_register"/> -->
+ ##zone commenté##
+ <field name="register_id" ref="hr_CNPS_register"/> 
+ ##zone commenté##
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">base = categories.GROSS
@@ -287,7 +299,9 @@ else:
         <field name="sequence" eval="211"/>
         <field name="code">CNPS_RET_PAT</field>
         <field name="category_id" ref="DEDSOCPAT"/>
-        <!-- <field name="register_id" ref="hr_CNPS_register"/> -->
+##zone commenté##
+ <field name="register_id" ref="hr_CNPS_register"/> 
+ ##zone commenté##
         <field name="parent_rule_id" ref="hr_rule_cnps_ret"/>
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
@@ -305,7 +319,9 @@ else:
         <field name="sequence" eval="215"/>
         <field name="code">CNPS_AT</field>
         <field name="category_id" ref="DEDSOCPAT"/>
-        <!-- <field name="register_id" ref="hr_CNPS_register"/> -->
+##zone commenté##
+ <field name="register_id" ref="hr_CNPS_register"/> 
+ ##zone commenté##
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">base = categories.GROSS
@@ -323,7 +339,9 @@ else:
         <field name="sequence" eval="220"/>
         <field name="code">CNPS_PF</field>
         <field name="category_id" ref="DEDSOCPAT"/>
-        <!-- <field name="register_id" ref="hr_CNPS_register"/> -->
+##zone commenté##
+ <field name="register_id" ref="hr_CNPS_register"/> 
+ ##zone commenté##
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">base = categories.GROSS
@@ -341,7 +359,9 @@ else:
         <field name="code">CNPS_CMU</field>
         <field name="account_credit" ref="l10n_syscohada.1_pcg_4333" />
         <field name="category_id" ref="DEDSOC"/>
-        <!-- <field name="register_id" ref="hr_CNPS_register"/> -->
+##zone commenté##
+ <field name="register_id" ref="hr_CNPS_register"/> 
+ ##zone commenté##
         <field name="condition_select">none</field>
         <field name="amount_select">percentage</field>
         <field name="amount_percentage_base">1000</field>
@@ -354,7 +374,9 @@ else:
         <field name="code">CNPS_CMU_PAT</field>
         <field name="category_id" ref="DEDSOCPAT"/>
         <field name="parent_rule_id" ref="hr_rule_cnps_cmu"/>
-        <!-- <field name="register_id" ref="hr_CNPS_register"/> -->
+##zone commenté##
+ <field name="register_id" ref="hr_CNPS_register"/> 
+ ##zone commenté##
         <field name="condition_select">none</field>
         <field name="amount_select">percentage</field>
         <field name="amount_percentage_base">1000</field>
@@ -366,7 +388,9 @@ else:
         <field name="sequence" eval="310"/>
         <field name="code">FDFP_TA</field>
         <field name="category_id" ref="DEDFISCPAT"/>
-        <!-- <field name="register_id" ref="hr_DGI_register"/> -->
+   ##zone commenté##
+   <field name="register_id" ref="hr_DGI_register"/> 
+   ##zone commenté##
         <field name="condition_select">none</field>
         <field name="amount_select">percentage</field>
         <field name="amount_percentage_base">categories.GROSS</field>
@@ -378,7 +402,9 @@ else:
         <field name="sequence" eval="315"/>
         <field name="code">FDFP_FPC</field>
         <field name="category_id" ref="DEDFISCPAT"/>
-        <!-- <field name="register_id" ref="hr_DGI_register"/> -->
+##zone commenté##
+ <field name="register_id" ref="hr_DGI_register"/> 
+ ##zone commenté##
         <field name="condition_select">none</field>
         <field name="amount_select">percentage</field>
         <field name="amount_percentage_base">categories.GROSS</field>
@@ -413,9 +439,11 @@ result = 30000/30</field>
         <field name="condition_select">none</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">result = categories.GROSS - categories.DEDFISCSAL - categories.DEDSOC + categories.ALWNIMPO</field>
-        <!-- <field name="register_id" ref="hr_payroll.contrib_register_employees"/> -->
+##zone commenté##
+ <field name="register_id" ref="hr_payroll.contrib_register_employees"/> 
+ ##zone commenté##
     </record>
-       
+        -->
 
         
 
