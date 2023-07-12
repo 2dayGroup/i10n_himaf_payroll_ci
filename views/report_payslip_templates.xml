@@ -149,32 +149,32 @@
                                         </span>
                                     </td>
                                     
-                                    <td class="text-center py-1" style="border-bottom: 0; border-top: 0;" t-if="not line.salary_rule_id.parent_rule_id and not line.salary_rule_id.child_ids">
+                                    <td class="text-center py-1" style="border-bottom: 0; border-top: 0;" t-if="not line.salary_rule_id.category_id.code.endswith('_PAT') and line.salary_rule_id.category_id.code.endswith('CPAT')">
                                         <span t-if="line.salary_rule_id.category_id.code == 'DEDSOCPAT' or line.salary_rule_id.category_id.code == 'DEDFISCPAT' or line.salary_rule_id.category_id.code == 'DEDSOCPAT'">
                                             <span t-if="line.quantity != 1" t-field="line.quantity" t-options='{"widget": "integer"}'/>
                                             <span t-if="line.rate != 100" t-field="line.rate" t-options='{"widget": "float"}'/>
                                         </span>
                                     </td>
-                                    <td class="text-center py-1" style="border-bottom: 0; border-top: 0;" t-if="not line.salary_rule_id.parent_rule_id and not line.salary_rule_id.child_ids">
+                                    <td class="text-center py-1" style="border-bottom: 0; border-top: 0;" t-if="not line.salary_rule_id.category_id.code.endswith('_PAT') and line.salary_rule_id.category_id.code.endswith('CPAT')">
                                         <span t-if="line.salary_rule_id.category_id.code == 'DEDSOCPAT' or line.salary_rule_id.category_id.code == 'DEDFISCPAT' or line.salary_rule_id.category_id.code == 'DEDSOCPAT'">
                                             <span t-field="line.total" t-options='{"widget": "integer"}'/>
                                             <t t-set="pat" t-value="pat+ line.total"/>
                                         </span>
                                     </td>
 
-                                    <td class="text-center py-1" style="border-bottom: 0; border-top: 0;" t-if="line.salary_rule_id.parent_rule_id">
+                                    <td class="text-center py-1" style="border-bottom: 0; border-top: 0;" t-if="line.salary_rule_id.category_id.code.endswith('_PAT')">
                                         <span t-if="line.salary_rule_id.category_id.code == 'DEDSOCPAT' or line.salary_rule_id.category_id.code == 'DEDFISCPAT' or line.salary_rule_id.category_id.code == 'DEDSOCPAT'">
                                             <span t-if="line.quantity != 1" t-field="line.quantity" t-options='{"widget": "integer"}'/>
                                             <span t-if="line.rate != 100" t-field="line.rate" t-options='{"widget": "float"}'/>
                                         </span>
                                     </td>
-                                    <td class="text-center py-1" style="border-bottom: 0; border-top: 0;" t-if="line.salary_rule_id.parent_rule_id">
+                                    <td class="text-center py-1" style="border-bottom: 0; border-top: 0;" t-if="line.salary_rule_id.category_id.code.endswith('_PAT')">
                                         <span t-if="line.salary_rule_id.category_id.code == 'DEDSOCPAT' or line.salary_rule_id.category_id.code == 'DEDFISCPAT' or line.salary_rule_id.category_id.code == 'DEDSOCPAT'">
                                             <span t-field="line.total" t-options='{"widget": "integer"}'/>
                                             <t t-set="pat" t-value="pat+ line.total"/>
                                         </span>
                                     </td>
-                                <t t-if="line.salary_rule_id.parent_rule_id or (not line.salary_rule_id.parent_rule_id and not line.salary_rule_id.child_ids)">
+                                <t t-if="line.salary_rule_id.category_id.code.endswith('_PAT') or (not line.salary_rule_id.category_id.code.endswith('_PAT') and not line.salary_rule_id.category_id.code.endswith('CPAT'))">
                                     &lt;/tr &gt;
                                 </t>
                             </t>
