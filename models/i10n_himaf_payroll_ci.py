@@ -34,7 +34,8 @@ class HrEmployeePrivate(models.Model):
     _inherit = 'hr.employee'
 
 
-    code = fields.Char(string='Matricule', required=True, readonly=True, copy=False, default="/")
+    # code = fields.Char(string='Matricule', required=True, readonly=True, copy=False, default="/")
+    registration_number = fields.Char('Registration Number of the Employee', groups="hr.group_hr_user", copy=False, required=True, default="/")
     n_cnps = fields.Char(string="N° CNPS", required=False)
     
    
@@ -42,7 +43,7 @@ class HrEmployeePrivate(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
-            vals['code'] = self.env['ir.sequence'].next_by_code('hr.employee') or _("/")
+            vals['registration_number'] = self.env['ir.sequence'].next_by_code('hr.employee') or _("/")
 
         # return super().create(vals_list)
             
@@ -77,8 +78,8 @@ class HrEmployeePrivate(models.Model):
         return employees
 
     def write(self, vals):
-        if self.code == '/':
-            vals['code'] = self.env['ir.sequence'].next_by_code('hr.employee')
+        if self.registration_number == '/':
+            vals['registration_number'] = self.env['ir.sequence'].next_by_code('hr.employee')
         if 'address_home_id' in vals:
             account_id = vals.get('bank_account_id') or self.bank_account_id.id
             if account_id:
