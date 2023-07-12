@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="hr_payroll.report_payslip">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="i10n_himaf_payroll_ci.payslip_external_layout">
+                
+                <div class="page">
+                    <link rel="stylesheet" href="/i10n_himaf_payroll_ci/static/src/css/report.css"/>
+                    <table class="table table-sm table-borderless">
+                        <tr>
+                            <td style="font-size: 12px">
+                                <span t-field="o.company_id.city"/><t t-if="o.company_id.street">, </t><span t-field="o.company_id.street"/><t t-if="o.company_id.street2">, </t><span t-field="o.company_id.street2"/>  </td>
+                            <td class="text-right" rowspan="2">
+                                <table class="table table-sm table-borderless mb-0">
+                                    <tr>
+                                        <td style="border-right: 1px solid black;" class="text-right">
+                                            <span t-field="o.date_from" t-options ='{"format": "MMMM"}'/> 
+                                        </td>
+                                        <td style="width: 20px">
+                                            <span t-field="o.date_from" t-options ='{"format": "yyyy"}'/>
+                                        </td>
+                                    </tr>
+                                    <tr style="font-size: 10px" >
+                                        <td class="text-right mr-3 py-0" >
+                                            Mois
+                                        </td>
+                                        <td class="py-0">
+                                            Année
+                                        </td>
+                                    </tr>
+                                </table>
+                                
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="font-size: 12px"><span t-field="o.company_id.zip"/> <span class="ml-3" t-field="o.company_id.phone"/> </td>
+                        </tr>
+                    </table>
+                    <div class="row ml-2 mr-4 mt-0">
+                        <div class="col-6">
+                           <t t-if="o.company_id.n_cnps">CNPS employeur : </t><span t-field="o.company_id.n_cnps"/>
+                            <table class="table table-sm table-borderless mt-2">
+                                <tr>
+                                    <td class="py-0">Réference: <span t-field="o.number"/></td>
+                                </tr>
+                                <tr>
+                                    <td class="py-0">Catégorie: <span t-field="o.contract_id.wage.name"/></td>
+                                </tr>
+                                <tr>
+                                    <td class="py-0">Parts IGR: </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-0">Date entrée</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-0">Ancienneté</td>
+                                </tr>
+                                
+                            </table>
+
+                        </div>
+                        <div class="col-6" style="background-color: #CFCFE1;">
+                            <table class="table table-sm table-borderless">
+                                <tr>
+                                    <td class="font-weight-bold"><t t-if="o.employee_id.gender == 'male'">M. </t><t t-if="o.employee_id.gender == 'female' and (o.employee_id.marital =='married' or o.employee_id.marital =='widower')">Mme. </t><t t-if="o.employee_id.gender == 'female' and (o.employee_id.marital =='single' or o.employee_id.marital =='cohabitant' or o.employee_id.marital =='divorced')">Mlle. </t> <span t-field="o.employee_id.name"/></td>
+                                </tr>
+                                <tr style="font-size: 13px;" class="py-0">
+                                    <td>Email: <span t-field="o.employee_id.private_email"/></td>
+                                </tr>
+                                <tr style="font-size: 13px;" class="py-0">
+                                    <td>Telephone: <span t-field="o.employee_id.phone"/></td>
+                                </tr>
+                                <tr style="font-size: 13px;" class="py-0">
+                                    <td>N° CNPS: <span t-field="o.employee_id.n_cnps"/></td>
+                                </tr>
+                                
+                            </table>
+                            <table class="table table-sm table-borderless" style="font-size: 13px;">
+                                <tr >
+                                    <td class="py-0">Matricule: <span t-field="o.employee_id.code"/></td>
+                                </tr>
+                                <tr>
+                                    <td class="py-0">POSTE: <span t-field="o.employee_id.job_title"/></td>
+                                </tr>
+                                <tr>
+                                    <td class="py-0">DEPARTEMENT: <span t-field="o.employee_id.department_id.name"/></td>
+                                </tr>                                
+                            </table>
+                        </div>
+                    </div>
+                     <table class="table table-sm table-bordered mt-3 mx-0" style="border-left:0; border-right:0">
+                        <tr>
+                            <td rowspan="2" class="align-middle text-center">N°</td>
+                            <td rowspan="2" class="align-middle text-center">LIBELLES</td>
+                            <td rowspan="2" class="align-middle text-center">BASE</td>
+                            <td colspan="3" class="text-center">PART SALARIALE</td>
+                            <td colspan="2" class="text-center">PART PATRONALE</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">NBRE/TAUX</td>
+                            <td class="text-center">GAIN</td>
+                            <td class="text-center">RETENUE</td>
+                            <td class="text-center">NBRE/TAUX</td>
+                            <td class="text-center">RETENUE</td>
+                        </tr>
+                       
+                        <t t-set="gain" t-value="0"/>
+                        <t t-set="ret" t-value="0"/>
+                        <t t-set="pat" t-value="0"/>
+                        <t t-set="brut" t-value="0"/>
+                        <t t-foreach="o.line_ids.filtered(lambda line: line.appears_on_payslip)" t-as="line">
+                            <t t-if="line.salary_rule_id.category_id.code != 'NET'">
+                                <t t-if="(line.salary_rule_id.child_ids and not line.salary_rule_id.parent_rule_id) or (not line.salary_rule_id.parent_rule_id and not line.salary_rule_id.child_ids)">
+                                    &lt;tr style="border-bottom: 0; border-top: 0;" &gt;
+                                </t>
+                                    <td style="border-bottom: 0; border-top: 0;" class="text-right py-1" t-if="(line.salary_rule_id.child_ids and not line.salary_rule_id.parent_rule_id) or (not line.salary_rule_id.child_ids and not line.salary_rule_id.parent_rule_id)"><span t-field="line.sequence"/></td>
+                                    <td class="py-1" style="border-bottom: 0; border-top: 0;" t-if="(line.salary_rule_id.child_ids and not line.salary_rule_id.parent_rule_id) or (not line.salary_rule_id.child_ids and not line.salary_rule_id.parent_rule_id)"><span t-if="line.salary_rule_id.category_id.code != 'GROSS'" t-field="line.name"/>
+                                    <span class="font-weight-bold" t-if="line.salary_rule_id.category_id.code == 'GROSS'" t-field="line.name"/>
+                                    </td>
+                                    <td style="border-bottom: 0; border-top: 0;" class="text-center py-1" t-if="(line.salary_rule_id.child_ids and not line.salary_rule_id.parent_rule_id) or (not line.salary_rule_id.child_ids and not line.salary_rule_id.parent_rule_id)">
+                                        <span t-if="line.salary_rule_id.category_id.code != 'BASIC' and line.code != 'SURSAL' and line.code != 'IS' and line.code != 'CN' and line.code != 'IGR' and line.salary_rule_id.category_id.code != 'GROSS'" t-field="line.amount" t-options='{"widget": "integer"}'/>
+                                        <span t-if="line.salary_rule_id.category_id.code == 'BASIC'" t-field="o.contract_id.wage.salary" t-options='{"widget": "integer"}'/>
+                                        <span t-if="line.code == 'SURSAL'" t-field="o.contract_id.up_wage" t-options='{"widget": "integer"}'/>
+                                        <span t-if="line.code == 'IS' or line.code == 'CN' or line.code == 'IGR'" t-esc="brut" t-options='{"widget": "integer"}'/>
+                                    </td>
+                                    <td class="text-center py-1" style="border-bottom: 0; border-top: 0;" t-if="(line.salary_rule_id.child_ids and not line.salary_rule_id.parent_rule_id) or (not line.salary_rule_id.child_ids and not line.salary_rule_id.parent_rule_id)">
+                                        <span t-if="line.salary_rule_id.category_id.code != 'DEDSOCPAT' and line.salary_rule_id.category_id.code != 'DEDFISCPAT' and line.salary_rule_id.category_id.code != 'DEDSOCPAT'">
+                                            <span t-if="line.quantity != 1" t-field="line.quantity" t-options='{"widget": "integer"}'/>
+                                            <span t-if="line.rate != 100" t-field="line.rate" t-options='{"widget": "float"}'/>
+                                        </span>
+                                    </td>
+                                    <td class="text-center py-1" style="border-bottom: 0; border-top: 0;" t-if="(line.salary_rule_id.child_ids and not line.salary_rule_id.parent_rule_id) or (not line.salary_rule_id.child_ids and not line.salary_rule_id.parent_rule_id)">
+                                        <span t-if="line.salary_rule_id.category_id.code == 'BASIC' or line.salary_rule_id.category_id.code == 'ALW' or line.salary_rule_id.category_id.code == 'ALWNIMPO'">
+                                            <span t-field="line.total" t-options='{"widget": "integer"}'/>
+                                              <t t-set="gain" t-value="gain+ line.total"/>
+                                        </span>
+                                        <span class="font-weight-bold" t-if="line.salary_rule_id.category_id.code == 'GROSS'" t-field="line.total" t-options='{"widget": "integer"}'/>
+                                        <t t-if="line.code == 'GROSS'" t-set="brut" t-value="line.total"/>
+                                    </td>
+                                    <td class="text-center py-1" style="border-bottom: 0; border-top: 0;" t-if="(line.salary_rule_id.child_ids and not line.salary_rule_id.parent_rule_id) or (not line.salary_rule_id.child_ids and not line.salary_rule_id.parent_rule_id)">
+                                        <span t-if="line.salary_rule_id.category_id.code == 'DED' or line.salary_rule_id.category_id.code == 'DEDSOC' or line.salary_rule_id.category_id.code == 'DEDFISCSAL'">
+                                            <span t-field="line.total" t-options='{"widget": "integer"}'/>
+                                              <t t-set="ret" t-value="ret+ line.total"/>
+                                        </span>
+                                    </td>
+                                    
+                                    <td class="text-center py-1" style="border-bottom: 0; border-top: 0;" t-if="not line.salary_rule_id.parent_rule_id and not line.salary_rule_id.child_ids">
+                                        <span t-if="line.salary_rule_id.category_id.code == 'DEDSOCPAT' or line.salary_rule_id.category_id.code == 'DEDFISCPAT' or line.salary_rule_id.category_id.code == 'DEDSOCPAT'">
+                                            <span t-if="line.quantity != 1" t-field="line.quantity" t-options='{"widget": "integer"}'/>
+                                            <span t-if="line.rate != 100" t-field="line.rate" t-options='{"widget": "float"}'/>
+                                        </span>
+                                    </td>
+                                    <td class="text-center py-1" style="border-bottom: 0; border-top: 0;" t-if="not line.salary_rule_id.parent_rule_id and not line.salary_rule_id.child_ids">
+                                        <span t-if="line.salary_rule_id.category_id.code == 'DEDSOCPAT' or line.salary_rule_id.category_id.code == 'DEDFISCPAT' or line.salary_rule_id.category_id.code == 'DEDSOCPAT'">
+                                            <span t-field="line.total" t-options='{"widget": "integer"}'/>
+                                            <t t-set="pat" t-value="pat+ line.total"/>
+                                        </span>
+                                    </td>
+
+                                    <td class="text-center py-1" style="border-bottom: 0; border-top: 0;" t-if="line.salary_rule_id.parent_rule_id">
+                                        <span t-if="line.salary_rule_id.category_id.code == 'DEDSOCPAT' or line.salary_rule_id.category_id.code == 'DEDFISCPAT' or line.salary_rule_id.category_id.code == 'DEDSOCPAT'">
+                                            <span t-if="line.quantity != 1" t-field="line.quantity" t-options='{"widget": "integer"}'/>
+                                            <span t-if="line.rate != 100" t-field="line.rate" t-options='{"widget": "float"}'/>
+                                        </span>
+                                    </td>
+                                    <td class="text-center py-1" style="border-bottom: 0; border-top: 0;" t-if="line.salary_rule_id.parent_rule_id">
+                                        <span t-if="line.salary_rule_id.category_id.code == 'DEDSOCPAT' or line.salary_rule_id.category_id.code == 'DEDFISCPAT' or line.salary_rule_id.category_id.code == 'DEDSOCPAT'">
+                                            <span t-field="line.total" t-options='{"widget": "integer"}'/>
+                                            <t t-set="pat" t-value="pat+ line.total"/>
+                                        </span>
+                                    </td>
+                                <t t-if="line.salary_rule_id.parent_rule_id or (not line.salary_rule_id.parent_rule_id and not line.salary_rule_id.child_ids)">
+                                    &lt;/tr &gt;
+                                </t>
+                            </t>
+                            <t t-if="line.salary_rule_id.category_id.code == 'NET'">
+                                <tr>
+                                    <td colspan="4" style="border-bottom: 0; border-left: 0;"></td>
+                                    <td class="text-center"><t t-esc="gain" t-options='{"widget": "integer"}' /></td>
+                                    <td class="text-center"><t t-esc="ret" t-options='{"widget": "integer"}' /></td>
+                                    <td style="border-bottom: 0;"></td>
+                                    <td class="text-center"><t t-esc="pat" t-options='{"widget": "integer"}'/></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="8" style="border: 0;"></td>
+                                </tr>
+                                <tr class="font-weight-bold" style="background-color: #CFCFE1;">
+                                    <td>
+                                        <span t-field="line.sequence"/>
+                                    </td>
+                                    <td colspan="5" class="text-right">
+                                        NET A PAYER
+                                    </td>
+                                    <td colspan="2" class="text-center" >
+                                        <span t-esc="line.total" t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </t>
+                        
+                    </table>
+
+                                                                                                                 
+            <div class="row">
+                <div class="col-3">Le concerné</div>
+                <div class="col-3">Mode de paiement</div>
+                <div class="col-3">
+                    Pour la société 
+                    <br/><br/>
+                    <span class="sign" t-if="o.state == 'done'">Marc Affechi</span>
+                    <img src='/i10n_himaf_payroll_ci/static/src/img/cachet.png' width="250" t-if="o.state == 'done'"/>
+
+                </div>
+                <div class="col-3 text-center">Date de paie<br/><span t-field="o.date_to"/></div>
+            </div>
+
+                </div>
+            </t>
+        </t>
+    </t>
+</template>
+</odoo>

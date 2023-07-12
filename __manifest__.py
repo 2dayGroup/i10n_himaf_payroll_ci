@@ -14,6 +14,9 @@
     "data": [
         "data/ir_sequence_data.xml",
         "data/i10n_himaf_payroll_ci_data.xml",
+        'data/paper_format.xml',
+        'views/report_payslip_templates.xml',
+        'views/report_layout.xml',
         "views/hr_view.xml", "views/base_config_view.xml", "views/i10n_himaf_payroll_view.xml",
         'security/ir.model.access.csv',
         ],

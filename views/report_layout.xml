@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<template id="payslip_layout">
+        <div class="header mb-0" >
+        	<link rel="stylesheet" href="/i10n_himaf_payroll_ci/static/src/css/report.css"/>
+            <div class="row" >
+                <div class="col-4">
+                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 80px;" alt="Logo"/>
+                </div>
+                <div class="col-8 text-right">
+                	<div class="row">
+                		<div class="col-12" name="company_website">
+                    		<p class="mb-0" style="font-size: 12px" t-field="company.website"/><br/>
+                    		<h2 class="font-weight-bold" >BULLETIN DE PAIE <t t-if="o.state == 'draft'">BROUILLON</t> <t t-if="o.state == 'cancel'">ANNULE</t></h2>
+                		</div>
+            		</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="article o_report_layout_standard"  t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <t t-raw="0"/>
+        </div>
+
+        <div class="footer o_standard_footer">
+        	<link rel="stylesheet" href="/i10n_himaf_payroll_ci/static/src/css/report.css"/>
+            <div class="text-center text-muted" >
+               
+            	Pour vous aider à faire valoir vos droits, conservez ce bulletin de paie sans limitation de durée.
+            </div>
+        </div>
+	</template>
+
+	<template id="payslip_external_layout">
+        <t t-if="not o" t-set="o" t-value="doc"/>
+
+        <t t-if="not company">
+            <!-- Multicompany -->
+            <t t-if="company_id">
+                <t t-set="company" t-value="company_id"/>
+            </t>
+            <t t-elif="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id.sudo()"/>
+            </t>
+            <t t-else="else">
+                <t t-set="company" t-value="res_company"/>
+            </t>
+        </t>
+
+        <t t-esc="company.update_scss()"/>
+
+        <t t-call="i10n_himaf_payroll_ci.payslip_layout"><t t-raw="0"/></t>
+    </template>
+
+    <template id="contract_layout">
+        <div class="header mb-0 first-page" >
+        	<link rel="stylesheet" href="/i10n_himaf_payroll_ci/static/src/css/report.css"/>
+	        <div class="row" >
+	            <div class="col-5">
+	                <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" style="max-height: 75px;" alt="Logo"/>
+	            </div>
+	            <div class="col-7" >
+	                <div class="row">
+	                    <div class="col-12" name="company_website">
+	                        Graphisme, Audiovisuel<br/>
+	                        Développement d'applications web &amp; Mobile<br/>
+	                        Marketing &amp; Communication<br/>
+	                        Evènementiel
+	                        <hr/>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+
+        <div class="article o_report_layout_standard"  t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <t t-raw="0"/>
+        </div>
+
+        <div class="footer o_standard_footer first-page">
+            <div class="text-center text-muted" >
+               
+                fofoof
+            </div>
+        </div>
+
+
+	</template>
+
+	<template id="contract_external_layout">
+        <t t-if="not o" t-set="o" t-value="doc"/>
+
+        <t t-if="not company">
+            <!-- Multicompany -->
+            <t t-if="company_id">
+                <t t-set="company" t-value="company_id"/>
+            </t>
+            <t t-elif="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id.sudo()"/>
+            </t>
+            <t t-else="else">
+                <t t-set="company" t-value="res_company"/>
+            </t>
+        </t>
+
+        <t t-esc="company.update_scss()"/>
+
+        <t t-call="i10n_himaf_payroll_ci.contract_layout"><t t-raw="0"/></t>
+    </template>
+
+
+    
+    <record id="hr_payroll.action_report_payslip" model="ir.actions.report">
+      <field name="paperformat_id" ref="i10n_himaf_payroll_ci.paperformat_payslip" />
+    </record>
+
+    <template id="minimal_layout" inherit_id="web.minimal_layout">
+    <xpath expr="//t[@t-if='subst_needed']" position="replace">
+        <t t-if="subst_needed">
+            <script>
+                function subst() {
+                    var vars = {};
+                    var x = document.location.search.substring(1).split('&amp;');
+                    for (var i in x) {
+                        var z = x[i].split('=', 2);
+                        vars[z[0]] = unescape(z[1]);
+                    }
+                    var x=['frompage', 'topage', 'page', 'webpage', 'section', 'subsection', 'subsubsection'];
+                    for (var i in x) {
+                        var y = document.getElementsByClassName(x[i]);
+                        for (var j=0; j&lt;y.length; ++j)
+                            y[j].textContent = vars[x[i]];
+                    }
+                    var operations = {
+                        'not-first-page': function (elt) {
+                            elt.style.display = (vars.page === vars.frompage) ? "none" : "initial";
+                        },
+                        'not-last-page': function (elt) {
+                            elt.style.display = (vars.page === vars.topage) ? "none" : "initial";
+                        },
+                        'first-page': function (elt) {
+                            elt.style.display = (vars.page === vars.frompage) ? "initial" : "none";
+                            
+                            
+                        },
+                        'last-page': function (elt) {
+                            elt.style.display = (vars.page === vars.topage) ? "initial" : "none";
+                        },
+                    };
+                    for (var klass in operations) {
+                        var y = document.getElementsByClassName(klass);
+                        for (var j=0; j&lt;y.length; ++j)
+                            operations[klass](y[j]);
+                    }
+                }
+            </script>
+        </t>
+    </xpath>
+</template>
+</odoo>
