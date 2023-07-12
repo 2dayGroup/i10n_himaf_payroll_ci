@@ -4,7 +4,7 @@
 
 import logging
 
-from odoo import _, api, models
+from odoo import _, api, models, fields
 from odoo.exceptions import ValidationError
 
 _logger = logging.getLogger(__name__)
@@ -14,6 +14,8 @@ UPDATE_PARTNER_FIELDS = ["firstname", "lastname", "user_id", "address_home_id"]
 
 class HrEmployee(models.Model):
     _inherit = "hr.employee"
+    
+    registration_number = fields.Char('Registration Number of the Employee', groups="hr.group_hr_user", copy=False, required=True, default="/")
 
     @api.model
     def _names_order_default(self):

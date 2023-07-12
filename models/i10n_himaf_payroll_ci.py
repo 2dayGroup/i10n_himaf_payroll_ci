@@ -35,7 +35,6 @@ class HrEmployeePrivate(models.Model):
 
 
     # code = fields.Char(string='Matricule', required=True, readonly=True, copy=False, default="/")
-    registration_number = fields.Char('Registration Number of the Employee', groups="hr.group_hr_user", copy=False, required=True, default="/")
     n_cnps = fields.Char(string="N° CNPS", required=False)
     
    
