@@ -115,7 +115,7 @@
       <field name="paperformat_id" ref="i10n_himaf_payroll_ci.paperformat_payslip" />
     </record>
 
-    <template id="minimal_layout" inherit_id="web.minimal_layout">
+    <!-- <template id="minimal_layout" inherit_id="web.minimal_layout">
     <xpath expr="//t[@t-if='subst_needed']" position="replace">
         <t t-if="subst_needed">
             <script>
@@ -157,5 +157,5 @@
             </script>
         </t>
     </xpath>
-</template>
+</template> -->
 </odoo>
