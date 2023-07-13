@@ -12,7 +12,7 @@
         		<data>
                     <div class="o_row mw-50" name="wage" position="after">
                         <!-- <label for="up_wage" /> -->
-                        <label for="up_wage" string ="SurSalaire" />
+                        <label for="up_wage" string="SurSalaire" />
                         <div class="o_row" name="up_wage">
                             <field name="up_wage" nolabel="1"/>
                             <span>/ month</span>
