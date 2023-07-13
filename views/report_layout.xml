@@ -111,7 +111,7 @@
 
 
     
-    <record id="hr_payroll.report_payslip_lang" model="ir.actions.report">
+    <record id="hr_payroll.action_report_payslip" model="ir.actions.report">
       <field name="paperformat_id" ref="i10n_himaf_payroll_ci.paperformat_payslip" />
     </record>
 
