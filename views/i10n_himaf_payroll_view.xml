@@ -3,44 +3,49 @@
 <odoo>
     <data>
 
-        <!-- <record id="hr_contract_view_form_l10n_ci_payroll_2day" model="ir.ui.view">
-            <field name="name">hr.contract.view.form.l10n.ci_payroll_2day</field>
+        <record id="hr_contract_view_form_i10n_himaf_payroll_ci" model="ir.ui.view">
+            <field name="name">hr.contract.view.form.l10n.i10n_himaf_payroll_ci</field>
             <field name="model">hr.contract</field>
             <field name="priority">20</field>
-            <field name="inherit_id" ref="om_hr_payroll.hr_contract_form_inherit"/>
+            <field name="inherit_id" ref="hr_payroll.hr_contract_view_form"/>
     		<field name="arch" type="xml">
         		<data>
-                    <div class="o_row" name="wage" position="after">
-                        <label for="up_wage" attrs="{'invisible': [('type', '=', 'work')]}"/>
-                        <label for="up_wage" string ="Prime" attrs="{'invisible': [('type', '!=', 'work')]}"/>
+                    <div class="o_row mw-50" name="wage" position="after">
+                        <!-- <label for="up_wage" /> -->
+                        <label for="up_wage" string ="SurSalaire" />
                         <div class="o_row" name="up_wage">
                             <field name="up_wage" nolabel="1"/>
                             <span>/ month</span>
                         </div>
                     </div>
-                    <field name="wage" nolabel="1" position="replace">
+                    <div class="o_row mw-50" name="wage" position='replace'>
+                            <field name="wage_cat" class="oe_inline o_hr_narrow_field" nolabel="1"/>
+                            <field name="wage" class="oe_inline o_hr_narrow_field" nolabel="1" readonly='1'/>
+                            <div class="mb-3">/ month</div>
+                        </div>
+                    <!-- <field name="wage" nolabel="1" position="replace">
                         <field name="wage" nolabel="1" attrs="{'required': [('type', '=', 'work')], 'invisible': [('type', '!=', 'work')]}"/>
+                    </field> -->
+
+                    <field name="date_start" position="after">
+                        <field name="trial_date_end" />
                     </field>
 
-                    <field name="date_start" position="before">
-                        <field name="type" />
-                    </field>
-
-                    <field name="trial_date_end" position="replace">
+                    <!-- <field name="trial_date_end" position="replace">
                         <field name="trial_date_end" attrs="{'invisible': ['|', ('type', '=', 'stage'), ('type', '=', 'intern')]}" />
-                    </field>
+                    </field> -->
 
-                    <field name="date_end" nolabel="1" position="replace">
+                    <!-- <field name="date_end" nolabel="1" position="replace">
                         <field name="date_end" nolabel="1" attrs="{'required': ['|', ('type', '=', 'stage'), ('type', '=', 'intern')]}"/>
-                    </field>
+                    </field> -->
 
-                    <field name="struct_id" required="1" position="replace">
+                    <!-- <field name="struct_id" required="1" position="replace">
                         <field name="struct_id" attrs="{'required': [('type', '=', 'work')], 'invisible': [('type', '!=', 'work')]}" />
-                    </field>
+                    </field> -->
                                     
                 </data>
             </field>
-        </record> -->
+        </record>
     	<!--	
     	<record id="hr_payslip_form_l10n_ci_payroll" model="ir.ui.view">
             <field name="name">hr.payslip.form.l10n.ma_payroll</field>

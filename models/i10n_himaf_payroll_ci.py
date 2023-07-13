@@ -105,3 +105,16 @@ class HrEmployeePrivate(models.Model):
         r = relativedelta((day_to+ relativedelta(months=+1, day=1, days=0)), min(contract.date_start for contract in self.contract_ids.filtered(lambda c: c.type == 'work')))
         #raise UserError(_(' %s \n (%s).') % (r.years, r.months))
         return r
+    
+
+class Contract(models.Model):
+    """
+    Employee contract based on the visa, work permits
+    allows to configure different Salary structure
+    """
+    _inherit = 'hr.contract'
+    _description = 'Employee Contract'
+
+
+    wage_cat = fields.Many2one('salary.grid', domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]", string='Wage category')
+    up_wage = fields.Float(string='Sursalaire', default=0)
