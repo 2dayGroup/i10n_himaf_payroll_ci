@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_salary_rule_form" model="ir.ui.view">
+        <field name="inherit_id" ref="hr_payroll.hr_salary_rule_form" />
+        <field name="model">hr.salary.rule</field>
+        <field name="arch" type="xml">
+          
+                    <page name="general" string="General" position="after">
+                        <page name="rules" string="Child Rules">
+                        <field name="parent_rule_id"/>
+                        <separator string="Children Definition"/>
+                        <field name="child_ids"/>
+                    </page>
+                    </page>
+             
+        </field>
+    </record>
+</odoo>
