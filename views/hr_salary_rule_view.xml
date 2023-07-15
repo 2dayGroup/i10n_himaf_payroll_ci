@@ -25,7 +25,7 @@
             <attribute name="style">background-color: red; color: white;</attribute>
         </xpath> -->
         <xpath expr="//field[@name='line_ids']/tree" position="attributes">
-            <attribute name="decoration-danger">category_id.code in ['DEDFISCSAL', 'DEDSOC']</attribute>
+            <attribute name="decoration-danger">code in ['IS', 'CN', 'CNPS_RET', 'CMU'] and total &gt; 0</attribute>
         </xpath>
     </field>
 </record>
