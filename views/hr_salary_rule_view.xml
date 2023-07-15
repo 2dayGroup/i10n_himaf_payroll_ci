@@ -15,4 +15,18 @@
         </field>
     </record>
 
+
+    <record id="view_payslip_form" model="ir.ui.view">
+    <field name="name">hr.payslip.form</field>
+    <field name="model">hr.payslip</field>
+    <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+    <field name="arch" type="xml">
+        <!-- <xpath expr="//field[@name='line_ids']/tree/field[@name='name']" position="attributes">
+            <attribute name="style">background-color: red; color: white;</attribute>
+        </xpath> -->
+        <xpath expr="//field[@name='line_ids']/tree" position="attributes">
+            <attribute name="decoration-danger">line.category_id.code in ['DEDFISCSAL', 'DEDSOC']</attribute>
+        </xpath>
+    </field>
+</record>
 </odoo>
