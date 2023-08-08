@@ -1,9 +1,7 @@
-# Copyright 2010-2014 Savoir-faire Linux (<http://www.savoirfairelinux.com>)
-# Copyright 2016-2019 Onestein (<https://www.onestein.eu>)
-# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-
+# -*- coding: utf-8 -*-
+from datetime import date, datetime, time
 import logging
-
+from dateutil.relativedelta import relativedelta
 from odoo import _, api, models, fields
 from odoo.exceptions import ValidationError
 
@@ -15,7 +13,9 @@ UPDATE_PARTNER_FIELDS = ["firstname", "lastname", "user_id", "address_home_id"]
 class HrEmployee(models.Model):
     _inherit = "hr.employee"
     
-    # registration_number = fields.Char('Registration Number of the Employee', groups="hr.group_hr_user", copy=False, required=True, default="/")
+    n_cnps = fields.Char(string="N° CNPS", required=False)
+    n_part = fields.Integer(string="Part IGR", required=True, default=1, compute='_compute_employee_igr_part', store=True)
+    # duration = fields.Char(string="Duration", required=False)
 
     @api.model
     def _names_order_default(self):
@@ -181,3 +181,35 @@ class HrEmployee(models.Model):
         for record in self:
             if not (record.firstname or record.lastname):
                 raise ValidationError(_("No name set."))
+
+    
+    def _compute_employee_duration(self, day_to=date.today()):
+        r = relativedelta((day_to+ relativedelta(months=+1, day=1, days=0)), self.first_contract_date)
+        #raise UserError(_(' %s \n (%s).') % (r.years, r.months))
+        return r
+    
+    
+    @api.depends('marital', 'children')
+    def _compute_employee_igr_part(self):
+        N = 1
+        #if self.marital == 'single' or self.marital == 'widower' or self.marital == 'divorced' and self.senior_children:
+        #    N = 1.5
+
+        if (self.marital == 'single' or self.marital == 'divorced' ) and self.children > 0:
+            N = 2
+
+        if self.marital == 'widower' and self.children > 0:
+            N = 2.5
+
+        if self.marital == 'married':
+            N = 2
+        if self.children > 0:
+            N = 2.5
+
+        if self.children > 1:
+            N += (self.children - 1) *0.5
+
+        if N > 5:
+            N = 5
+            
+        self.n_part = N

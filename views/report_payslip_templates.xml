@@ -46,19 +46,18 @@
                                 </tr>
                                 <tr>
                                     <td class="py-0">
-                                    Catégorie: (a imp.)
-                                   <!-- <span t-field="o.contract_id.wage.name"/> 
-                                     TODO: categorie a mettre en oeuvrer -->
+                                    Catégorie:
+                                    <span t-field="o.contract_id.wage_cat.name"/> 
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="py-0">Parts IGR: </td>
+                                    <td class="py-0">Parts IGR: <span t-field="o.n_part"/></td>
                                 </tr>
                                 <tr>
-                                    <td class="py-0">Date entrée</td>
+                                    <td class="py-0">Date entrée: <span t-field="o.first_contract_date"/> </td>
                                 </tr>
                                 <tr>
-                                    <td class="py-0">Ancienneté</td>
+                                    <td class="py-0">Ancienneté TODO:</td>
                                 </tr>
                                 
                             </table>

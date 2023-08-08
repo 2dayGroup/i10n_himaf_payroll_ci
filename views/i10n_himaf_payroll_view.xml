@@ -12,14 +12,14 @@
         		<data>
                     <div class="o_row mw-50" name="wage" position="after">
                         <label for="up_wage" string="SurSalaire" />
-                        <div class="o_row" name="up_wage">
-                            <field name="up_wage" nolabel="1"/>
-                            <span>/ month</span>
+                        <div class="o_row mw-50" name="up_wage">
+                            <field name="up_wage" nolabel="1" class="oe_inline o_hr_narrow_field"/>
+                            <div class="mb-3">/ month</div>
                         </div>
                     </div>
-                    <div class="o_row mw-50" name="wage" position='before'>
+                    <label for="wage"  position='before'>
                             <field name="wage_cat"/>
-                        </div> 
+                        </label> 
                      <!-- <field name="wage" nolabel="1" position="replace">
                         <field name="wage" nolabel="1" attrs="{'required': [('type', '=', 'work')], 'invisible': [('type', '!=', 'work')]}"/>
                     </field> -->
