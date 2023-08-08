@@ -14,7 +14,7 @@ class HrEmployee(models.Model):
     _inherit = "hr.employee"
     
     n_cnps = fields.Char(string="N° CNPS", required=False)
-    n_part = fields.Integer(string="Part IGR", required=True, default=1, compute='_compute_employee_igr_part', store=True)
+    n_part = fields.Float(string="Part IGR", required=True, default=1, compute='_compute_employee_igr_part', store=True)
     # duration = fields.Char(string="Duration", required=False)
 
     @api.model
