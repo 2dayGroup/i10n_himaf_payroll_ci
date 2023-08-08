@@ -2,16 +2,16 @@
 <odoo>
 
 	<template id="payslip_layout">
-        <div class="header mb-0" >
+        <div class="header mb-0" style="margin-bottom:0px" >
         	<link rel="stylesheet" href="/i10n_himaf_payroll_ci/static/src/css/report.css"/>
             <div class="row" >
                 <div class="col-4">
                     <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 80px;" alt="Logo"/>
                 </div>
-                <div class="col-8 text-right">
+                <div class="col-8 text-end">
                 	<div class="row">
                 		<div class="col-12" name="company_website">
-                    		<p class="mb-0" style="font-size: 12px" t-field="company.website"/><br/>
+                    		<p class="mb-0" style="font-size: 12px;margin-bottom:0px" t-field="company.website"/><br/>
                     		<h2 class="font-weight-bold" >BULLETIN DE PAIE <t t-if="o.state == 'draft'">BROUILLON</t> <t t-if="o.state == 'cancel'">ANNULE</t></h2>
                 		</div>
             		</div>

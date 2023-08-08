@@ -22,7 +22,7 @@
                                         </td>
                                     </tr>
                                     <tr style="font-size: 10px">
-                                        <td class="text-end mr-3 py-0">
+                                        <td class="text-end me-3 py-0">
                                             Mois
                                         </td>
                                         <td class="py-0">
@@ -34,10 +34,10 @@
                             </td>
                         </tr>
                         <tr>
-                            <td style="font-size: 12px"><span t-field="o.company_id.zip"/> <span class="ml-3" t-field="o.company_id.phone"/> </td>
+                            <td style="font-size: 12px"><span t-field="o.company_id.zip"/> <span class="ms-3" t-field="o.company_id.phone"/> </td>
                         </tr>
                     </table>
-                    <div class="row ml-2 mr-4 mt-0">
+                    <div class="row ms-2 me-4 mt-0">
                         <div class="col-6">
                            <t t-if="o.company_id.n_cnps">CNPS employeur : </t><span t-field="o.company_id.n_cnps"/>
                             <table class="table table-sm table-borderless mt-2">
@@ -93,7 +93,7 @@
                             </table>
                         </div>
                     </div>
-                     <table class="table table-sm table-bordered mt-3 mx-0 border-black" style="border-left:0; border-right:0">
+                     <table class="table table-sm table-bordered mt-3 mx-0" style="border-left:0; border-right:0">
                         <tr>
                             <td rowspan="2" class="align-middle text-center">N°</td>
                             <td rowspan="2" class="align-middle text-center">LIBELLES</td>
@@ -131,7 +131,7 @@
                                     <td class="text-center py-1" style="border-bottom: 0; border-top: 0;" t-if="(line.salary_rule_id.child_ids and not line.salary_rule_id.parent_rule_id) or (not line.salary_rule_id.child_ids and not line.salary_rule_id.parent_rule_id)">
                                         <span t-if="line.salary_rule_id.category_id.code != 'DEDSOCPAT' and line.salary_rule_id.category_id.code != 'DEDFISCPAT' and line.salary_rule_id.category_id.code != 'DEDSOCPAT'">
                                             <span t-if="line.quantity != 1" t-field="line.quantity" t-options="{&quot;widget&quot;: &quot;integer&quot;}"/>
-                                            <span t-if="line.rate != 100" t-field="line.rate" t-options="{&quot;widget&quot;: &quot;float&quot;}"/>
+                                            <span t-if="line.rate != 100" t-field="line.rate" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/>
                                         </span>
                                     </td>
                                     <td class="text-center py-1" style="border-bottom: 0; border-top: 0;" t-if="(line.salary_rule_id.child_ids and not line.salary_rule_id.parent_rule_id) or (not line.salary_rule_id.child_ids and not line.salary_rule_id.parent_rule_id)">
@@ -152,7 +152,7 @@
                                     <td class="text-center py-1" style="border-bottom: 0; border-top: 0;" t-if="not line.salary_rule_id.parent_rule_id and not line.salary_rule_id.child_ids">
                                         <span t-if="line.salary_rule_id.category_id.code == 'DEDSOCPAT' or line.salary_rule_id.category_id.code == 'DEDFISCPAT' or line.salary_rule_id.category_id.code == 'DEDSOCPAT'">
                                             <span t-if="line.quantity != 1" t-field="line.quantity" t-options="{&quot;widget&quot;: &quot;integer&quot;}"/>
-                                            <span t-if="line.rate != 100" t-field="line.rate" t-options="{&quot;widget&quot;: &quot;float&quot;}"/>
+                                            <span t-if="line.rate != 100" t-field="line.rate" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/>
                                         </span>
                                     </td>
                                     <td class="text-center py-1" style="border-bottom: 0; border-top: 0;" t-if="not line.salary_rule_id.parent_rule_id and not line.salary_rule_id.child_ids">
@@ -165,7 +165,7 @@
                                     <td class="text-center py-1" style="border-bottom: 0; border-top: 0;" t-if="line.salary_rule_id.parent_rule_id">
                                         <span t-if="line.salary_rule_id.category_id.code == 'DEDSOCPAT' or line.salary_rule_id.category_id.code == 'DEDFISCPAT' or line.salary_rule_id.category_id.code == 'DEDSOCPAT'">
                                             <span t-if="line.quantity != 1" t-field="line.quantity" t-options="{&quot;widget&quot;: &quot;integer&quot;}"/>
-                                            <span t-if="line.rate != 100" t-field="line.rate" t-options="{&quot;widget&quot;: &quot;float&quot;}"/>
+                                            <span t-if="line.rate != 100" t-field="line.rate" t-options="{&quot;widget&quot;: &quot;float&quot;, &quot;precision&quot;: 2}"/>
                                         </span>
                                     </td>
                                     <td class="text-center py-1" style="border-bottom: 0; border-top: 0;" t-if="line.salary_rule_id.parent_rule_id">

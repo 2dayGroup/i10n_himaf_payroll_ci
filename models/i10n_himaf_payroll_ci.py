@@ -118,3 +118,9 @@ class Contract(models.Model):
 
     wage_cat = fields.Many2one('salary.grid', domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]", string='Wage category')
     up_wage = fields.Float(string='Sursalaire', default=0)
+    
+    
+    @api.onchange('wage_cat')
+    def _onchange_wage_cat(self):
+        if self.wage_cat:
+            self.wage = self.wage_cat.salary
