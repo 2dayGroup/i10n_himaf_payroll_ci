@@ -191,26 +191,27 @@ class HrEmployee(models.Model):
     
     @api.depends('marital', 'children')
     def _compute_employee_igr_part(self):
-        self.ensure_one()
-        N = 1
-        #if self.marital == 'single' or self.marital == 'widower' or self.marital == 'divorced' and self.senior_children:
-        #    N = 1.5
-
-        if (self.marital == 'single' or self.marital == 'divorced' ) and self.children > 0:
-            N = 2
-
-        if self.marital == 'widower' and self.children > 0:
-            N = 2.5
-
-        if self.marital == 'married':
-            N = 2
-        if self.children > 0:
-            N = 2.5
-
-        if self.children > 1:
-            N += (self.children - 1) *0.5
-
-        if N > 5:
-            N = 5
+        for employee in self:
             
-        self.n_part = N
+            N = 1
+            #if self.marital == 'single' or self.marital == 'widower' or self.marital == 'divorced' and self.senior_children:
+            #    N = 1.5
+
+            if (employee.marital == 'single' or employee.marital == 'divorced' ) and employee.children > 0:
+                N = 2
+
+            if employee.marital == 'widower' and employee.children > 0:
+                N = 2.5
+
+            if employee.marital == 'married':
+                N = 2
+            if employee.children > 0:
+                N = 2.5
+
+            if employee.children > 1:
+                N += (employee.children - 1) *0.5
+
+            if N > 5:
+                N = 5
+                
+            employee.n_part = N
