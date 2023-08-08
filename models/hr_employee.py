@@ -191,6 +191,7 @@ class HrEmployee(models.Model):
     
     @api.depends('marital', 'children')
     def _compute_employee_igr_part(self):
+        self.ensure_one()
         N = 1
         #if self.marital == 'single' or self.marital == 'widower' or self.marital == 'divorced' and self.senior_children:
         #    N = 1.5
