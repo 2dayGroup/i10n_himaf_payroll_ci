@@ -3,7 +3,7 @@
 
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError, ValidationError
-
+import datetime as dateTime
 
 class HrSalaryRule(models.Model):
     _inherit = 'hr.salary.rule'
@@ -26,3 +26,32 @@ class HrSalaryRule(models.Model):
         for rule in self.filtered(lambda rule: rule.child_ids):
             children_rules += rule.child_ids._recursive_search_of_rules()
         return [(rule.id, rule.sequence) for rule in self] + children_rules
+
+    def _add_date_libs(self, localdict):
+        
+        localdict.update({
+            'datetime': dateTime,
+            'duration': localdict['employee']._compute_employee_duration(localdict['payslip'].date_to)
+            })
+        return localdict
+
+    #@api.multi
+    def _compute_rule(self, localdict):
+        """
+        :param localdict: dictionary containing the environement in which to compute the rule
+        :return: returns a tuple build as the base/amount computed, the quantity and the rate
+        :rtype: (float, float, float)
+        """
+        self.ensure_one()
+        localdict = self._add_date_libs(localdict)
+        return super(HrSalaryRule, self)._compute_rule(localdict)
+
+    #@api.multi
+    def _satisfy_condition(self, localdict):
+        """
+        @param contract_id: id of hr.contract to be tested
+        @return: returns True if the given rule match the condition for the given contract. Return False otherwise.
+        """
+        self.ensure_one()
+        localdict = self._add_date_libs(localdict)
+        return super(HrSalaryRule, self)._satisfy_condition(localdict)

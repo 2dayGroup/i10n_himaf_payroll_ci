@@ -143,5 +143,9 @@ class HrPayslip(models.Model):
         if current_date.month < first_contract_date.month:
             years -= 1
             months += 12
-
-        return f"{years} an(s) {months} mois"
+        if years == 0:
+            return f"{months} mois"
+        elif years == 1:
+            return f"{years} an, {months} mois"
+        else :
+            return f"{years} ans, {months} mois"

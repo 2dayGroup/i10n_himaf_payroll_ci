@@ -51,7 +51,17 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="py-0">Parts IGR: <span t-field="o.employee_id.n_part"/></td>
+                                    <td class="py-0">Parts IGR:
+                                    
+
+                                    <!-- Afficher la valeur en integer si possible, sinon en float avec le nombre de décimales spécifié -->
+                                        <t t-if="o.employee_id.n_part == int(o.employee_id.n_part)">
+                                            <t t-esc="int(o.employee_id.n_part)"/>
+                                        </t>
+                                        <t t-else="">
+                                            <t t-esc="o.employee_id.n_part" t-options="{&quot;widget&quot;: &quot;number&quot;, &quot;precision&quot;: 1}"/>
+                                        </t>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="py-0">Date entrée: <span t-field="o.employee_id.first_contract_date"/> </td>
