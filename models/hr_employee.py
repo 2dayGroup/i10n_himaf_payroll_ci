@@ -182,7 +182,6 @@ class HrEmployee(models.Model):
             if not (record.firstname or record.lastname):
                 raise ValidationError(_("No name set."))
 
-    
     def _compute_employee_duration(self, day_to=date.today()):
         r = relativedelta((day_to+ relativedelta(months=+1, day=1, days=0)), self.first_contract_date)
         #raise UserError(_(' %s \n (%s).') % (r.years, r.months))

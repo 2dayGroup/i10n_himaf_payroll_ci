@@ -1,6 +1,6 @@
 from odoo import fields, models, api, _
 from dateutil.relativedelta import relativedelta
-from datetime import date
+from datetime import date, datetime
 from werkzeug.urls import url_encode
 		
 class res_company(models.Model):
@@ -124,3 +124,24 @@ class Contract(models.Model):
     def _onchange_wage_cat(self):
         if self.wage_cat:
             self.wage = self.wage_cat.salary
+            
+            
+
+class HrPayslip(models.Model):
+    _inherit = 'hr.payslip'
+    
+    def calculate_seniority(self):
+        # Convertir la date de string à un objet datetime
+        first_contract_date = self.employee_id.first_contract_date
+        # Obtenir la date actuelle
+        current_date = self.date_from
+        # Calculer la différence entre les deux dates en années et mois
+        years = current_date.year - first_contract_date.year
+        months = current_date.month - first_contract_date.month
+
+        # Si le mois actuel est antérieur au mois de début de contrat, réduire d'une année
+        if current_date.month < first_contract_date.month:
+            years -= 1
+            months += 12
+
+        return f"{years} an(s) {months} mois"
