@@ -30,7 +30,7 @@ class HrSalaryRule(models.Model):
     def _add_date_libs(self, localdict):
         
         localdict.update({
-            'datetime': dateTime,
+            # 'datetime': dateTime,
             'duration': localdict['employee']._compute_employee_duration(localdict['payslip'].date_to)
             })
         return localdict
