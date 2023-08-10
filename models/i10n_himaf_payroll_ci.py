@@ -102,7 +102,7 @@ class HrEmployeePrivate(models.Model):
         return res
 
     def _compute_employee_duration(self, day_to=date.today()):
-        r = relativedelta((day_to+ relativedelta(months=+1, day=1, days=0)), min(contract.date_start for contract in self.contract_ids.filtered(lambda c: c.type == 'work')))
+        r = relativedelta((day_to+ relativedelta(months=+1, day=1, days=0)), self.first_contract_date)
         #raise UserError(_(' %s \n (%s).') % (r.years, r.months))
         return r
     
@@ -118,12 +118,14 @@ class Contract(models.Model):
 
     wage_cat = fields.Many2one('salary.grid', domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]", string='Wage category')
     up_wage = fields.Float(string='Sursalaire', default=0)
+    wage = fields.Monetary('Wage', required=True, tracking=True, store="true", compute="_onchange_wage_cat", help="Employee's monthly gross wage.")
     
     
-    @api.onchange('wage_cat')
+    @api.depends('wage_cat')
     def _onchange_wage_cat(self):
-        if self.wage_cat:
-            self.wage = self.wage_cat.salary
+        for contract in self:
+            if contract.wage_cat:
+                contract.wage = contract.wage_cat.salary
             
             
 
